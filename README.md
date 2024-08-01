@@ -4,6 +4,7 @@ Multi-platform easy-to-use assistant for working with Zim files. Can be used to 
 I created this application to make it easier to collect data from the internet for running a local AI on my machine.
 
 GUI:
+
 ![image](https://github.com/user-attachments/assets/8b97259b-c743-4085-b042-9b6aa6679ade)
 
 Extracted text from Zim file:
