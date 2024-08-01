@@ -29,7 +29,93 @@ def extract_all_text(zim_file_path, output_file):
                         outfile.write(clean_text + "\n\n")
 
     zim_file.close()
-    print()
+
+
+def search_in_zim_file(zim_file_path):
+    # Open the ZIM file
+    zim_file = zimply.zimply.ZIMFile(zim_file_path, encoding='utf-8')
+    results = []
+
+    # Iterate over all articles
+    for idx in range(zim_file.header_fields['articleCount']):
+        # Get the Directory Entry
+        entry = zim_file.read_directory_entry_by_index(idx)
+        if entry['namespace'] == "A":
+            # Get the article data
+            article = zim_file._get_article_by_index(idx)
+            if article and article.data:
+                # Decode the article data
+                text = article.data.decode('utf-8', errors='ignore')
+                # Check if keyword is in the text
+
+    zim_file.close()
+    return results
+
+
+def extract_titles(zim_file_path):
+    # Open the ZIM file
+    zim_file = zimply.zimply.ZIMFile(zim_file_path, encoding='utf-8')
+    results = []
+
+    # Iterate over all articles
+    for idx in range(zim_file.header_fields['articleCount']):
+        # Get the Directory Entry
+        entry = zim_file.read_directory_entry_by_index(idx)
+        if entry['namespace'] == "A":
+            results.append((entry['url'], entry['title']))
+
+    zim_file.close()
+    return results
+
+
+def save_selected_titles(results, output_file):
+    # Create a list of titles for the multchoicebox
+    choices = [f"{title} ({url})" for url, title in results]
+
+    # Display multchoicebox for user to select titles
+    selected_choices = easygui.multchoicebox("Select titles to save:", "Title Selection", choices)
+
+    if selected_choices:
+        with open(output_file, 'w', encoding='utf-8') as outfile:
+            for choice in selected_choices:
+                # Extract the index of the selected choice
+                selected_index = choices.index(choice)
+                # Get the corresponding title
+                selected_url, selected_title = results[selected_index]
+                # Write the title and URL to the file
+                outfile.write(f"Title: {selected_title}\nURL: {selected_url}\n\n")
+
+
+def save_titles_to_file(zim_file_path, output_file_path):
+    # Open the ZIM file
+    zim_file = zimply.zimply.ZIMFile(zim_file_path, encoding='utf-8')
+    urls = []
+
+    # Iterate over all articles
+
+    for idx in range(zim_file.header_fields['articleCount']):
+        # Get the Directory Entry
+        entry = zim_file.read_directory_entry_by_index(idx)
+        if entry['namespace'] == "A":  # Check if the entry is an article
+            article = zim_file._get_article_by_index(idx)
+            if article and article.data:
+                # Decode the article data
+                text = article.data.decode('utf-8', errors='ignore')
+                # Check if it's text by looking for HTML tags
+                if '<body' in text.lower():
+                    urls.append(entry['url'])
+
+    zim_file.close()
+
+    with open(output_file_path, 'w', encoding='utf-8') as outfile:
+        for title in urls:
+            outfile.write(f"{title}\n")
+
+
+def view_file(file_path):
+    with open(file_path, 'r', encoding='utf-8') as file:
+        content = file.read()
+        easygui.textbox("File Content", "View File", content)
 
 
 def urlopener(url):
@@ -59,8 +145,12 @@ stop = 0
 while stop == 0:
 
     # Define the list of options
-    options = ["Open kiwix web app to view content of and download Zim files", "Extract text content from Zim file",
-               "Create Zim file in browser with zimit.kiwix.org (Limit of 4GB for size of Zim file)",
+    options = ["What is a Zim file? And how do I read it?", "Open kiwix web app to view content of and download Zim "
+                                                            "files", "Extract text content from Zim file",
+               "Select and save articles/webpages in Zim file", "Get list of articles/webpages inside a Zim file",
+               "Open file in GUI",
+               "Create Zim file in browser with zimit.kiwix.org ("
+               "Limit of 4GB for size of Zim file)",
                "Create Zim file using farm.openzim.org through github request",
                "Open farm.openzim.org to check status of and download Zim files", "Exit Zim-Assistant GUI"]
 
@@ -68,14 +158,36 @@ while stop == 0:
     choice = easygui.choicebox(msg="How can I help you?", title="Zim-Assistant GUI", choices=options)
 
     # Perform an action based on the user's choice
+    if choice == "What is a Zim file? And how do I read it?":
+        easygui.msgbox("The ZIM file format stores website content for offline usage. It assembles the normal "
+                       "constituent of a website into a single archive, and compresses it so as to make it easier to "
+                       "save, share, and store.", "ZIM GUI")
+        easygui.msgbox("You will need a ZIM file reader. This usually means Kiwix, which is available on desktop "
+                       "computers, mobile devices, and more.", "ZIM GUI")
     if choice == "Open kiwix web app to view content of and download Zim files":
         urlopener("https://pwa.kiwix.org/www/index.html")
     elif choice == "Extract text content from Zim file":
         zim_file_path = file_path = easygui.fileopenbox(title="Select a Zim file", default="*.zim")
-        output_file = easygui.filesavebox(title="Create file for extracted text", default="extracted_text.txt")
-        easygui.msgbox("Press OK to extract. Another pop-up will appear when extraction is completed", "ZIM GUI")
+        output_file = easygui.filesavebox(title="Create a file for extracted text", default="extracted_text.txt")
+        easygui.msgbox("Press OK to extract all text. Another pop-up will appear when extraction is completed",
+                       "ZIM GUI")
         extract_all_text(zim_file_path, output_file)
         easygui.msgbox(f"All text content has been extracted to {output_file}", "ZIM GUI")
+    elif choice == "Select and save articles/webpages in Zim file":
+        zim_file_path = file_path = easygui.fileopenbox(title="Select a Zim file", default="*.zim")
+        output_file = easygui.filesavebox(title="Create a file for extracted text", default="selected_text.txt")
+        easygui.msgbox("Press OK to extract titles. Another pop-up will appear when extraction is completed", "ZIM GUI")
+        save_selected_titles(extract_titles(zim_file_path), output_file)
+        easygui.msgbox(f"All titles of selected articles/webpages has been extracted to {output_file}", "ZIM GUI")
+    elif choice == "Get list of articles/webpages inside a Zim file":
+        zim_file_path = file_path = easygui.fileopenbox(title="Select a Zim file", default="*.zim")
+        output_file = easygui.filesavebox(title="Create a file for extracted text", default="selected_text.txt")
+        easygui.msgbox("Press OK to extract titles. Another pop-up will appear when extraction is completed", "ZIM GUI")
+        save_titles_to_file(zim_file_path, output_file)
+        easygui.msgbox(f"All titles of selected articles/webpages has been extracted to {output_file}", "ZIM GUI")
+    elif choice == "Open file in GUI":
+        openpath = easygui.fileopenbox("Select a file to open", "Open File")
+        view_file(openpath)
     elif choice == "Create Zim file in browser with zimit.kiwix.org (Limit of 4GB for size of Zim file)":
         urlopener("https://zimit.kiwix.org/")
     elif choice == "Create Zim file using farm.openzim.org through github request":
@@ -86,6 +198,3 @@ while stop == 0:
     elif choice == "Exit Zim-Assistant GUI":
         stop = 1
         easygui.msgbox("Exiting Zim-Assistant GUI", "Zim-Assistant GUI")
-    else:
-        easygui.msgbox("No option selected. Exiting...", "Zim-Assistant GUI")
-
