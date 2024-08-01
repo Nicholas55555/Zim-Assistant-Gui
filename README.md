@@ -3,15 +3,13 @@ Multi-platform easy-to-use assistant for working with Zim files. Can be used to 
 
 I created this application to make it easier to collect data from the internet for running a local AI on my machine.
 
-Running on Windows:
-
-![image](https://github.com/user-attachments/assets/5bd58237-304c-4f7e-acf1-1f1af81a6a12)
-
-Running on Linux:
-
-![image](https://github.com/user-attachments/assets/51ecdbe1-c4fb-41c7-b242-f3327b34d5cb)
+![image](https://github.com/user-attachments/assets/8b97259b-c743-4085-b042-9b6aa6679ade)
 
 Extracted text from Zim file:
 
 ![image](https://github.com/user-attachments/assets/0ae13d9a-02c3-45ed-8224-3507a5a5b365)
 
+
+Extracted titles:
+
+![image](https://github.com/user-attachments/assets/616b3abd-7aa5-4178-87bf-6e13daa8f185)
