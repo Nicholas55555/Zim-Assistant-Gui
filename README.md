@@ -7,11 +7,11 @@ GUI:
 
 ![image](https://github.com/user-attachments/assets/8b97259b-c743-4085-b042-9b6aa6679ade)
 
+Extracted titles:
+
+![image](https://github.com/user-attachments/assets/616b3abd-7aa5-4178-87bf-6e13daa8f185)
+
 Extracted text from Zim file:
 
 ![image](https://github.com/user-attachments/assets/0ae13d9a-02c3-45ed-8224-3507a5a5b365)
 
-
-Extracted titles:
-
-![image](https://github.com/user-attachments/assets/616b3abd-7aa5-4178-87bf-6e13daa8f185)
