@@ -61,7 +61,7 @@ while stop == 0:
     # Define the list of options
     options = ["Open kiwix web app to view content of and download Zim files", "Extract text content from Zim file",
                "Create Zim file in browser with zimit.kiwix.org (Limit of 4GB for size of Zim file)",
-               "Create Zim using farm.openzim.org through github request",
+               "Create Zim file using farm.openzim.org through github request",
                "Open farm.openzim.org to check status of and download Zim files", "Exit Zim-Assistant GUI"]
 
     # Display the choicebox
@@ -78,7 +78,7 @@ while stop == 0:
         easygui.msgbox(f"All text content has been extracted to {output_file}", "ZIM GUI")
     elif choice == "Create Zim file in browser with zimit.kiwix.org (Limit of 4GB for size of Zim file)":
         urlopener("https://zimit.kiwix.org/")
-    elif choice == "Create Zim using farm.openzim.org through github request":
+    elif choice == "Create Zim file using farm.openzim.org through github request":
         urlopener("https://github.com/openzim/zim-requests/issues/new?assignees=&labels=&projects=&template=new-zim"
                   "-request.md&title=New+request%3A+")
     elif choice == "Open farm.openzim.org to check status of and download Zim files":
