@@ -5,11 +5,11 @@ I created this application to make it easier to collect data from the internet f
 
 GUI:
 
-![image](https://github.com/user-attachments/assets/8b97259b-c743-4085-b042-9b6aa6679ade)
+![image](https://github.com/user-attachments/assets/60cbf68d-1182-4b57-8abd-f8a9264c24b5)
 
-Extracted titles:
+Extracted titles/urls:
 
-![image](https://github.com/user-attachments/assets/616b3abd-7aa5-4178-87bf-6e13daa8f185)
+![image](https://github.com/user-attachments/assets/3b7ce0f1-56d8-4b74-9930-025ea23833fd)
 
 Extracted text from Zim file:
 
