@@ -8,6 +8,7 @@ GUI:
 ![image](https://github.com/user-attachments/assets/60cbf68d-1182-4b57-8abd-f8a9264c24b5)
 
 Selecting namespace:
+
 ![image](https://github.com/user-attachments/assets/0d6114c8-fb8d-408b-a30c-e05a0f9edc24)
 
 Extracted titles/urls:
