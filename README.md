@@ -1,4 +1,4 @@
-Check out Zim-Manager GUI its significantly more feature-rich
+Check out Zim-Manager GUI it's significantly more feature-rich
 
 # Zim-Assistant Gui
 Multi-platform easy-to-use assistant for working with Zim files. Can be used to create Zim files, extract full or selected content of Zim files (using Zimply), Get titles/urls in Zim files and view content of Zim files. Works on Windows, macOS and Linux. 
